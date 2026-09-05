@@ -4,6 +4,7 @@ import Welcome from './components/Welcome'
 import Login from './components/login'
 import { supabase } from './supabaseClient'
 
+
 export default function App() {
   const [loading, setLoading] = useState(true)
   const [isLogIn, setIsLogIn] = useState(true)
