@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Welcome from './components/Welcome'
 import { supabase } from './supabaseClient'
-import Loader from './components/loader'
-import Login from './components/login'
+import Loader from './components/Loader'
+import Login from './components/Login'
 
 
 export default function App() {

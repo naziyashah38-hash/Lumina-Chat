@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { supabase } from '../supabaseClient';
-import Login from './login';
-import { LogIn, LogOut, Send,  UserPlus , SmilePlus , Upload ,Trash2 , Smile , X , Check } from 'lucide-react';
+import Login from './Login';
+import { LogIn,  Send,  UserPlus , SmilePlus , Upload ,Trash2 , Smile , X , Check } from 'lucide-react';
 import { UserKey } from 'lucide-react';
 import { Dot } from 'lucide-react';
 
