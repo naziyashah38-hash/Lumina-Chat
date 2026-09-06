@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { supabase } from '../supabaseClient';
 import Login from './Login';
-import { LogIn,  Send,  UserPlus , SmilePlus , Upload ,Trash2 , Smile , X , Check } from 'lucide-react';
+import { LogIn,  Send,  UserPlus , SmilePlus , Upload ,Trash2 , Smile , X , Check , Menu , House ,Bolt, Info } from 'lucide-react';
 import { UserKey } from 'lucide-react';
 import { Dot } from 'lucide-react';
 
@@ -19,6 +19,9 @@ export default function Welcome({
   setUser,
   handleLogout,
   message_reactions,
+  onOpenInfo,
+  onOpenSettings,
+  onOpenProfile,
 }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
@@ -509,11 +512,13 @@ const handleDeclineRequest = async (requestId) => {
 
   return (
     
-    <div className="min-h-screen flex flex-col text-zinc-100">
+    <div className="min-h-screen flex flex-col bg-zinc-950 text-zinc-100">
       {/* Header */}
+      
       <header className="fixed top-0 left-0 right-0 z-50 h-16 w-full p-8  border-b border-zinc-800 flex justify-between items-center bg-zinc-950">
-        <h1 className=" cormorant-garamond-uniquifier font-bold text-brown-400 ml-1 text-2xl tracking-wider ">LUMINA NEXUS </h1>
-         {/* <p className=" text-bold ">Lumina said  'HI' 😉</p> */}
+     
+        <h1 className=" cormorant-garamond-uniquifier font-bold text-brown-400 ml-1 text-3xl tracking-wider ">LUMINA NEXUS </h1>
+         
         {isLoggedIn ? (
           <div className="flex items-center "> 
           <Dot size={36} color='#D4D7DB' strokeWidth={3} />
@@ -541,7 +546,18 @@ const handleDeclineRequest = async (requestId) => {
       {/* Main Container */}
       <div className="flex w-full mt-16  ">
         {/* Sidebar */}
-        <aside className="fixed top-14  left-0 w-92 h-calc mt-2 border-r scrollbar-none overflow-auto  border-zinc-800 p-3 flex flex-col gap-4 bg-sidebar shrink-0 z-40 ">
+       <div className='bg-white fixed  h-full space-y-9 p-2 w-12'>
+       <div className='mt-6 '> <Menu color="#222222"  /></div>
+       <div onClick={onOpenProfile} className='cursor-pointer'> <House color="#222222" /></div>
+        <div onClick={onOpenSettings} className='cursor-pointer'> <Bolt color="#222222" /></div>
+        <div onClick={onOpenInfo} className='cursor-pointer'> <Info color="#222222"/> </div>
+
+        <div onClick={() => {
+            setShowLogoutConfirm(true)
+          }} className='cursor-pointer'> <LogIn color="#222222"  /> </div>
+
+        </div> 
+        <aside className="fixed top-14 left-12 w-80 h-calc mt-2 border-r scrollbar-none overflow-auto  border-zinc-800 p-3 flex flex-col gap-4 bg-sidebar shrink-0 z-40 ">
           <input
             type="text"
             placeholder=" Find someone to spill the tea with...☕"
@@ -602,7 +618,7 @@ const handleDeclineRequest = async (requestId) => {
                     <button
                       type="button"
                       onClick={togglePending}
-                      className="w-85 flex items-center justify-between p-3 bg-zinc-500 border gap-19 text-[#192841] font-semibold rounded-lg  cursor-pointer"
+                      className="w-72 flex items-center justify-between p-3 bg-frnd border gap-19 text-[#192841] font-semibold rounded-lg  cursor-pointer"
                     >
                       <span> <b> Pending Requests</b></span>
                       <span className="text-xs">{isToggle ? '▲ Close' : '▼ Open'}</span>
@@ -648,12 +664,12 @@ const handleDeclineRequest = async (requestId) => {
 
 
         {/* Chat Area */}
-        <main className="flex-1 mr-2 mb-2 h-screen bg-zinc-950 scrollbar-none overflow-auto  ">
+        <main className="flex-1 mr-2 mb-2 h-screen bg-zinc-950 scrollbar-none  overflow-auto  ">
          {activeChat ? (
             <> 
               {/* Chat Header */}
-              <div className="p-3 fixed text-brown-400 border-b border-zinc-800  w-full ml-  font-bold bg-zinc-950 ">
-                {activeChat.username|| activeChat?.name}
+              <div className="p-3 fixed text-brown-400 border z-10  border-zinc-800  w-full font-bold bg-[#1a2d42] ">
+              <div className='flex-1 ml-106  '> {activeChat.username|| activeChat?.name}  
              
                <span className="text-xs ml-1 font-normal ">
                         {isFriendTyping ? (
@@ -669,10 +685,10 @@ const handleDeclineRequest = async (requestId) => {
                         ) : (
                           <span className="offline">Offline</span>
                         )}
-                      </span> </div>
+                      </span> </div> </div>
 
               {/* Messages Area */}
-              <div  className=" p-2 space-y-3 mt-25.5 gap-2 mb-12 ">
+              <div  className=" p-2 space-y-3 mt-26.5 gap-2 mb-12 ">
                 {messages.filter(Boolean).map((msg, idx) => {
                   const isMe = msg.sender === user?.id;
 
@@ -738,7 +754,7 @@ const handleDeclineRequest = async (requestId) => {
                             className="w-full max-w-xs md\:max-w-sm max-h-60 rounded-2xl object-cover cursor-pointer hover:opacity-95   "
                           />
                         ) : msg.is_sticker ? (
-                          <span className="text-5xl select-none leading-none drop-shadow-md">{msg.text}</span>
+                          <span className="text-4xl leading-none select-none my-1 drop-shadow-md">{msg.text}</span>
                         ) : (
                           <p className="whitespace-pre-wrap wrap-break-words">{msg.text}</p>
                         )}
@@ -775,9 +791,8 @@ const handleDeclineRequest = async (requestId) => {
               </div>
 
               
-         <div className=" fixed bottom-0 p-2 bg-zinc-950  scrollbar-none  flex items-center gap-1 ">
-          <div className="relative flex-none">
-              {/* Sticker Drawer */}
+         <div className=" fixed bottom-0 p-2 bg-zinc-950 scrollbar-none  flex items-center gap-1 ">
+          <div className="relative  flex-none">
               {showStickers && (
                 <div className="p-2 absolute  bottom-0 left-0 z-30 mb-13 rounded-full bg-white border flex gap-3">
                   {SYSTEM_STICKERS.map((sticker, idx) => (
@@ -807,7 +822,7 @@ const handleDeclineRequest = async (requestId) => {
                 <input
                   type="text"
                   placeholder={`Message ... ${activeChat.username|| activeChat?.name}`}
-                  className="flex-1  bg-zinc-800 border border-zinc-700 rounded-full p-4 font-white w font-bold text-sm "
+                  className="flex  bg-zinc-800 border border-zinc-700 rounded-full p-4 font-white w-269 font-bold text-sm "
                   value={typedMessage}
                   onChange={handleTypedMessageChange}
                   onKeyDown={(e) =>{
@@ -827,6 +842,7 @@ const handleDeclineRequest = async (requestId) => {
                 </div>
               </div>
             </>
+            
           ) : (
             <div className="flex-1 flex items-center justify-center text-white mt-50">
              Select or search a contact connection profile to discuss who are we spilling today?🎀

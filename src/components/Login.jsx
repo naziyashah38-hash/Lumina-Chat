@@ -147,7 +147,7 @@ const isFormValid = (email?.trim().length > 0 || username?.trim().length > 0) &&
               setUsername(noSpaces);
             }}
           />
-          <p className="text-xxs text-zinc-400 px-3">
+          <p className="text-xxs text-white px-3">
       Must be 3-10 characters long and can only contain letters and numbers.
     </p> 
        
@@ -176,7 +176,7 @@ const isFormValid = (email?.trim().length > 0 || username?.trim().length > 0) &&
         <Eye size={18} />
       )}
     </div>
-     <p className="text-xxs text-zinc-400 px-3">
+     <p className="text-xxs text-white px-3">
       Must contain 1 uppercase, 1 lowercase, 1 number & 1 special character (@$!%*?&_-#)
     </p> 
        

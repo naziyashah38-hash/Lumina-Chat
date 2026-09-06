@@ -3,6 +3,9 @@ import Welcome from './components/Welcome'
 import { supabase } from './supabaseClient'
 import Loader from './components/Loader'
 import Login from './components/Login'
+import Info from './components/Info'
+import Settings from './components/Settings'
+import Profile from './components/Profile'
 
 
 export default function App() {
@@ -12,6 +15,9 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [user, setUser] = useState(null)
   const [isFading, setIsFading] = useState(false);
+const [showSettings, setShowSettings] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
  
   useEffect(() => {
     document.title = "Lumina Nexus";
@@ -107,9 +113,24 @@ export default function App() {
         setUser={setUser}
         handleLogout={handleLogout}
         onSearchInteraction={handleSearchInteraction}
+        onOpenInfo={() => setShowInfo(true)}
+        onOpenSettings={() => setShowSettings(true)}
+        onOpenProfile={() => setShowProfile(true)}
       />
       </div>
-        
+
+        {showProfile && (
+        <Profile 
+          user={user} 
+          setUser={setUser} 
+          onClose={() => setShowProfile(false)} 
+        />
+      )}
+
+        {showInfo && (
+        <Info onClose={() => setShowInfo(false)} />
+      )}
+      {showSettings && <Settings onClose={() => setShowSettings(false)} />}
 
       {/* 2. Login Popup (Shown when user is not logged in) */}
       {!isLoggedIn && isOpen && (
